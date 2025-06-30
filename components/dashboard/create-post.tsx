@@ -38,7 +38,7 @@ export function CreatePost({ user, onPostCreated }: CreatePostProps) {
   const [showMentionButton, setShowMentionButton] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   
-  const maxLength = 280;
+  const maxLength = 260;
   const progress = (content.length / maxLength) * 100;
 
   useEffect(() => {
@@ -223,9 +223,9 @@ export function CreatePost({ user, onPostCreated }: CreatePostProps) {
     <>
       <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardContent className="p-6">
-          <div className="flex space-x-4">
+          <div className="flex space-x-2">
             <Avatar className="w-14 h-14 ring-2 ring-primary/20">
-              <AvatarImage src={user.profile?.avatarUrl} alt={user.profile?.displayName} />
+              <AvatarImage src={user.profile?.avatarUrl ?? undefined } alt={user.profile?.displayName} />
               <AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-500 text-white font-bold text-lg">
                 {user.profile?.displayName?.split(' ').map(n => n[0]).join('') || 'U'}
               </AvatarFallback>
@@ -259,25 +259,25 @@ export function CreatePost({ user, onPostCreated }: CreatePostProps) {
               </div>
               
               {content.length > 0 && (
-                <div className="flex items-center space-x-3">
-                  <div className="flex-1">
-                    <Progress 
-                      value={Math.min(progress, 100)} 
-                      className="h-2"
-                    />
-                  </div>
-                  <span className={`text-sm font-medium ${
-                    progress > 90 ? 'text-red-400' : 
-                    progress > 75 ? 'text-orange-400' : 
-                    'text-green-400'
-                  }`}>
-                    {maxLength - content.length}
-                  </span>
+              <div className="flex items-center justify-between mt-2">
+                <div className="w-full">
+                  <Progress 
+                    value={Math.min(progress, 100)} 
+                    className="h-2"
+                  />
                 </div>
+                <span className={`text-sm font-medium ${
+                  progress > 90 ? 'text-red-400' : 
+                  progress > 75 ? 'text-orange-400' : 
+                  'text-green-400'
+                }`}>
+                  {maxLength - content.length}
+                </span>
+              </div>
               )}
               
               <div className="flex items-center justify-between pt-3 border-t">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-4">
                   <Button 
                     variant="ghost" 
                     size="sm" 
@@ -373,11 +373,11 @@ export function CreatePost({ user, onPostCreated }: CreatePostProps) {
       {/* Mentions Dropdown (from typing @) */}
       {showMentions && filteredUsers.length > 0 && (
         <div 
-          className="fixed bg-background border border-border rounded-xl shadow-2xl z-50 max-h-60 overflow-y-auto min-w-[320px]"
+          className="absolute bg-background border border-border rounded-xl shadow-2xl z-50 max-h-60 overflow-y-auto min-w-[320px]"
           style={{
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)'
+            top: '100%',
+            left: 0,
+            transform: 'translate(0, 8px)'
           }}
         >
           {filteredUsers.slice(0, 5).map((mentionUser, index) => (

@@ -61,8 +61,11 @@ export function MainFeed({ user, activeTab }: MainFeedProps) {
         }
 
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
+            <div className='flex justify-center'>
             <CreatePost user={user} onPostCreated={handlePostCreated} />
+
+            </div>
             
             {/* Feed Type Selector */}
             <Card className="card-modern">

@@ -5,11 +5,13 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ReactQueryProvider } from '@/lib/react-query';
 import { Toaster } from '@/components/ui/sonner';
+import BoltBadge from '@/components/ui/bolt-badge';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Social Platform - Connect with AI and Humans',
+  icons: '/logo.png',
   description: 'A next-generation social platform combining Twitter, Reddit, and AI agents',
 };
 
@@ -26,11 +28,17 @@ export default function RootLayout({
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
             >
-              {children}
-              <Toaster />
+              <BoltBadge />
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+                <Toaster />
+              </ThemeProvider>
             </ThemeProvider>
           </ReactQueryProvider>
         </body>

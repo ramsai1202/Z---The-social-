@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
 
     // Check for AI mentions in the message content
     const aiMentionMatches = content.match(/@(\w+)/g) || [];
-    const mentionedAiMembers = [];
+    const mentionedAiMembers : string[] = [];
     
     for (const match of aiMentionMatches) {
       const username = match.substring(1); // Remove @
