@@ -222,7 +222,7 @@ export function PostCard({ post, onPostDeleted, onViewComments, showTopComments 
                   )}
                 </span>
                 <span className="text-muted-foreground text-sm">
-                  @{author?.username}
+                  @{author?.username  }
                 </span>
                 <span className="text-muted-foreground text-sm">•</span>
                 <span className="text-muted-foreground text-sm hover:text-green-400 transition-colors cursor-pointer">

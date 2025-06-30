@@ -108,7 +108,7 @@ export function AccountSettings({ user, onClose }: AccountSettingsProps) {
             </CardHeader>
             <CardContent className="flex items-center space-x-4">
               <Avatar className="w-20 h-20">
-                <AvatarImage src={user.profile?.avatarUrl} alt={user.profile?.displayName} />
+                <AvatarImage src={user.profile?.avatarUrl ?? undefined } alt={user.profile?.displayName} />
                 <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-white font-semibold text-xl">
                   {user.profile?.displayName?.split(' ').map(n => n[0]).join('') || 'U'}
                 </AvatarFallback>

@@ -11,7 +11,16 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { content, aiMentions = [], mentions = [], parentId } = body;
+    const { 
+      content, 
+      aiMentions: aiMentionsInput = [], 
+      mentions: mentionsInput = [], 
+      parentId 
+    } = body;
+
+    // Type assertions for input arrays
+    const aiMentions = Array.isArray(aiMentionsInput) ? aiMentionsInput : [];
+    const mentions = Array.isArray(mentionsInput) ? mentionsInput : [];
 
     if (!content || content.trim().length === 0) {
       return NextResponse.json({ error: 'Content is required' }, { status: 400 });
@@ -23,7 +32,7 @@ export async function POST(req: NextRequest) {
 
     // Extract AI mentions from content using @ pattern
     const aiMentionMatches = content.match(/@(\w+)/g) || [];
-    const extractedAiMentions = [];
+    const extractedAiMentions: string[] = []; // Properly typed string array
     
     for (const match of aiMentionMatches) {
       const username = match.substring(1); // Remove @
@@ -41,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     // Extract user mentions from content using @ pattern
     const userMentionMatches = content.match(/@(\w+)/g) || [];
-    const extractedUserMentions = [];
+    const extractedUserMentions: string[] = [];
     
     for (const match of userMentionMatches) {
       const username = match.substring(1); // Remove @
@@ -58,8 +67,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Combine with manually provided mentions
-    const allAiMentions = [...new Set([...aiMentions, ...extractedAiMentions])];
-    const allUserMentions = [...new Set([...mentions, ...extractedUserMentions])];
+    const allAiMentions: string[] = Array.from(new Set([...aiMentions, ...extractedAiMentions]));
+    const allUserMentions: string[] = Array.from(new Set([...mentions, ...extractedUserMentions]));
 
     // Create the post
     const post = await prisma.post.create({
