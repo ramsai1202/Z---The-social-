@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function BoltBadge() {
   return (
-    <Link href="/bolt.new">
+    <Link href="https://bolt.new">
       <div className="fixed top-4 right-4 z-50 cursor-pointer">
         <Image
           src="/bolt.png"
